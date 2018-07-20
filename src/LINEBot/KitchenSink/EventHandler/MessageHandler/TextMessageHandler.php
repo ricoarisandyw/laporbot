@@ -101,7 +101,8 @@ class TextMessageHandler implements EventHandler
                 );
                 break;
             case 'buttons':
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', '']);
+                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
                 $buttonTemplateBuilder = new ButtonTemplateBuilder(
                     'My button sample',
                     'Hello my button',
@@ -117,7 +118,8 @@ class TextMessageHandler implements EventHandler
                 $this->bot->replyMessage($replyToken, $templateMessage);
                 break;
             case 'carousel':
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', '1040.jpg']);
+                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
                 $carouselTemplateBuilder = new CarouselTemplateBuilder([
                     new CarouselColumnTemplateBuilder('foo', 'bar', $imageUrl, [
                         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
@@ -132,6 +134,7 @@ class TextMessageHandler implements EventHandler
                 $this->bot->replyMessage($replyToken, $templateMessage);
                 break;
             case 'imagemap':
+                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
                 $richMessageUrl = UrlBuilder::buildUrl($this->req, ['static', 'rich']);
                 $imagemapMessageBuilder = new ImagemapMessageBuilder(
                     $richMessageUrl,
