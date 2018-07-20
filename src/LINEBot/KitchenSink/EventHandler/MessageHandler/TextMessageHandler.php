@@ -160,8 +160,8 @@ class TextMessageHandler implements EventHandler
                 $this->bot->replyMessage($replyToken, $imagemapMessageBuilder);
                 break;
             case 'sticker':
-                $packageId = 1;
-                $stickerId = 3;
+                $packageId = '1';
+                $stickerId = '3';
                 $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
                 $bot->replyMessage($replyToken, $stickerMessageBuilder);
                 break;
