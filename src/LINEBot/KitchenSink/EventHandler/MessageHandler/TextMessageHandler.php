@@ -36,6 +36,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
+use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
 class TextMessageHandler implements EventHandler
 {
@@ -163,6 +164,12 @@ class TextMessageHandler implements EventHandler
                 $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
                 $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
                 break;
+            case 'image':
+                $packageId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                $stickerId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                $stickerMessageBuilder = new ImageMessageBuilder($packageId, $stickerId);
+                $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
+                break;
             default:
                 // $this->echoBack($replyToken, $text);
                 $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
@@ -171,7 +178,7 @@ class TextMessageHandler implements EventHandler
     }
 
     /**
-     * @param string $replyToken
+     * @param string $replyTokenr
      * @param string $text
      */
     private function echoBack($replyToken, $text)
