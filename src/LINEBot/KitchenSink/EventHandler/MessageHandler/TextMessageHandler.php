@@ -36,8 +36,6 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
-use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
-use LINE\LINEBot\MessageBuilder\VideoMessageBuilder;
 
 class TextMessageHandler implements EventHandler
 {
@@ -163,19 +161,7 @@ class TextMessageHandler implements EventHandler
                 $packageId = '1';
                 $stickerId = '3';
                 $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
-                $bot->replyMessage($replyToken, $stickerMessageBuilder);
-                break;
-            case 'image':
-                $imageMessageBuilder = new ImagemMessageBuilder('https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg', 'https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg?resize=300%2C156&ssl=1');
-                $bot->replyMessage($replyToken, $imageMessageBuilder);            
-                break;
-            case 'video':
-                try{
-                    $videoMessageBuilder = new VideoMessageBuilder('url video asli', 'url gambar preview video');
-                    $bot->replyMessage($replyToken, $videoMessageBuilder);
-                }catch(Exception $e){
-                    $this->echoBack($replyToken, $e);
-                }
+                $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
                 break;
             default:
                 // $this->echoBack($replyToken, $text);
