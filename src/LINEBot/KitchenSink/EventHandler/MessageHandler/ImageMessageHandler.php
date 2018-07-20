@@ -23,6 +23,7 @@ use LINE\LINEBot\Event\MessageEvent\ImageMessage;
 use LINE\LINEBot\KitchenSink\EventHandler;
 use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler\Util\UrlBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
 class ImageMessageHandler implements EventHandler
 {
@@ -70,6 +71,7 @@ class ImageMessageHandler implements EventHandler
 
         // NOTE: You should pass the url of small image to `previewImageUrl`.
         // This sample doesn't treat that.
-        $this->bot->replyMessage($replyToken, new ImageMessageBuilder($url, $url));
+        $this->bot->replyMessage($replyToken,new TextMessageBuilder('Anda mengirim gambar'));
+        // $this->bot->replyMessage($replyToken, new ImageMessageBuilder($url, $url));
     }
 }
