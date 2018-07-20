@@ -156,6 +156,24 @@ class TextMessageHandler implements EventHandler
                 );
                 $this->bot->replyMessage($replyToken, $imagemapMessageBuilder);
                 break;
+            case 'sticker':
+                $packageId = 1;
+                $stickerId = 3;
+                $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
+                $bot->replyMessage($replyToken, $stickerMessageBuilder);
+                break;
+            case 'image':
+                $imageMessageBuilder = new ImagemMessageBuilder('https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg', 'https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg?resize=300%2C156&ssl=1');
+                $bot->replyMessage($replyToken, $imageMessageBuilder);            
+                break;
+            case 'video':
+                try{
+                    $videoMessageBuilder = new VideoMessageBuilder('url video asli', 'url gambar preview video');
+                    $bot->replyMessage($replyToken, $videoMessageBuilder);
+                }catch(Exception $e){
+                    $this->echoBack($replyToken, $e);
+                }
+                break;
             default:
                 // $this->echoBack($replyToken, $text);
                 $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
