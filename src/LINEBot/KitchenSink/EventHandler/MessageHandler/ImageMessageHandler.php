@@ -71,7 +71,8 @@ class ImageMessageHandler implements EventHandler
 
         // NOTE: You should pass the url of small image to `previewImageUrl`.
         // This sample doesn't treat that.
-        $this->bot->replyMessage($replyToken,new TextMessageBuilder('Anda mengirim gambar'));
+        // $this->bot->replyMessage($replyToken,new TextMessageBuilder('Anda mengirim gambar'));
+        $this->bot->replyMessage($replyToken,new TextMessageBuilder($url));
         // $this->bot->replyMessage($replyToken, new ImageMessageBuilder($url, $url));
     }
 }
