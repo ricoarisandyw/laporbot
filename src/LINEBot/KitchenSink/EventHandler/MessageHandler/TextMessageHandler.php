@@ -99,7 +99,8 @@ class TextMessageHandler implements EventHandler
                 );
                 break;
             case 'buttons':
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', '1040.jpg']);
+                // $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', '1040.jpg']);
+                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', 'https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg']);
                 $buttonTemplateBuilder = new ButtonTemplateBuilder(
                     'My button sample',
                     'Hello my button',
@@ -115,7 +116,7 @@ class TextMessageHandler implements EventHandler
                 $this->bot->replyMessage($replyToken, $templateMessage);
                 break;
             case 'carousel':
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', '1040.jpg']);
+                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', 'https://i0.wp.com/alidzakyalarief.com/wp-content/uploads/2018/01/gambar-bbm-keren-10.jpg']);
                 $carouselTemplateBuilder = new CarouselTemplateBuilder([
                     new CarouselColumnTemplateBuilder('foo', 'bar', $imageUrl, [
                         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
