@@ -188,7 +188,14 @@ class TextMessageHandler implements EventHandler
                 default:
                     // TODO: Check Status user
                     $userId = $this->textMessage->getUserId();
-                    $this->isActive($userId);
+                    $response = $this->bot->getProfile($userId);
+                    if (!$response->isSucceeded()) {
+                        $this->bot->replyText($replyToken, $response->getRawBody());
+                        return;
+                    }
+
+                    $profile = $response->getJSONDecodedBody();
+                    $this->isActive($profile);
                     break;
                     // $this->echoBack($replyToken, $text);
                     // $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
