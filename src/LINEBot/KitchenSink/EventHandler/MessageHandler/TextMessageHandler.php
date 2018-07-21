@@ -225,7 +225,7 @@ class TextMessageHandler implements EventHandler
         // or die('Could not connect: ' . pg_last_error());
 
         // Performing SQL query
-        $query = "SELECT * FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $query = "SELECT * FROM public.report WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         //FIND WHICH DATA IS BLANK
