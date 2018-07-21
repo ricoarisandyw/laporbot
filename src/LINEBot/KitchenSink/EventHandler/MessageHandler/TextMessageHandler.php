@@ -355,7 +355,7 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "UPDATE public.report
         SET location='".$data."' 
-        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         // Free resultset
@@ -376,7 +376,7 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "UPDATE public.report
         SET message='".$data."' 
-        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         // Free resultset
@@ -397,7 +397,7 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "UPDATE public.report
         SET status='DONE' 
-        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         // Free resultset
@@ -419,7 +419,7 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "UPDATE public.report
         SET disposition='".$data."' 
-        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         // Free resultset
         pg_free_result($result);
