@@ -350,8 +350,6 @@ class TextMessageHandler implements EventHandler
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
 
-        // Closing connection
-        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET location='".$data."' 
@@ -360,6 +358,8 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
+        // Closing connection
+        pg_close($dbconn);
     }
 
     private function createMessage($profile,$data){
@@ -371,14 +371,14 @@ class TextMessageHandler implements EventHandler
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
-        // Closing connection
-        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET message='".$data."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
+        $result = pg_query($query);
+        // or die('Query failed: ' . pg_last_error());
+        // Closing connection
+        pg_close($dbconn);
         // Free resultset
         pg_free_result($result);
     }
@@ -392,16 +392,17 @@ class TextMessageHandler implements EventHandler
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
-        // Closing connection
-        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET status='DONE' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        $result = pg_query($query);
+        //or die('Query failed: ' . pg_last_error());
 
         // Free resultset
         pg_free_result($result);
+        // Closing connection
+        pg_close($dbconn);
     }
 
     private function createDisposition($id,$data){
@@ -414,8 +415,6 @@ class TextMessageHandler implements EventHandler
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
 
-        // Closing connection
-        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET disposition='".$data."' 
@@ -423,6 +422,8 @@ class TextMessageHandler implements EventHandler
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         // Free resultset
         pg_free_result($result);
+        // Closing connection
+        pg_close($dbconn);
     }
     
     private function isActive($profile,$replyToken,$text){
