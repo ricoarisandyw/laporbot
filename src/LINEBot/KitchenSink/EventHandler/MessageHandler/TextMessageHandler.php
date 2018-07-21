@@ -70,113 +70,137 @@ class TextMessageHandler implements EventHandler
         $replyToken = $this->textMessage->getReplyToken();
         $this->logger->info("Got text message from $replyToken: $text");
 
-        switch ($text) {
-            case 'profile':
-                $userId = $this->textMessage->getUserId();
-                $this->sendProfile($replyToken, $userId);
-                break;
-            case 'bye':
-                if ($this->textMessage->isRoomEvent()) {
-                    $this->bot->replyText($replyToken, 'Leaving room');
-                    $this->bot->leaveRoom($this->textMessage->getRoomId());
+        //TODO: Check in database if client has ACTIVE status or not.
+        $ACTIVE = false;
+        if($ACTIVE){
+            active(strtolower($text));
+        }else{
+            switch (strtolower($text)) {
+                case 'profile':
+                    $userId = $this->textMessage->getUserId();
+                    $this->sendProfile($replyToken, $userId);
                     break;
-                }
-                if ($this->textMessage->isGroupEvent()) {
-                    $this->bot->replyText($replyToken, 'Leaving group');
-                    $this->bot->leaveGroup($this->textMessage->getGroupId());
+                case 'bye':
+                    if ($this->textMessage->isRoomEvent()) {
+                        $this->bot->replyText($replyToken, 'Leaving room');
+                        $this->bot->leaveRoom($this->textMessage->getRoomId());
+                        break;
+                    }
+                    if ($this->textMessage->isGroupEvent()) {
+                        $this->bot->replyText($replyToken, 'Leaving group');
+                        $this->bot->leaveGroup($this->textMessage->getGroupId());
+                        break;
+                    }
+                    $this->bot->replyText($replyToken, 'Bot cannot leave from 1:1 chat');
                     break;
-                }
-                $this->bot->replyText($replyToken, 'Bot cannot leave from 1:1 chat');
-                break;
-            case 'confirm':
-                $this->bot->replyMessage(
-                    $replyToken,
-                    new TemplateMessageBuilder(
-                        'Confirm alt text',
-                        new ConfirmTemplateBuilder('Do it?', [
-                            new MessageTemplateActionBuilder('Yes', 'Yes!'),
-                            new MessageTemplateActionBuilder('No', 'No!'),
-                        ])
-                    )
-                );
-                break;
-            case 'buttons':
-                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
-                $buttonTemplateBuilder = new ButtonTemplateBuilder(
-                    'My button sample',
-                    'Hello my button',
-                    $imageUrl,
-                    [
-                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                        new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
-                        new MessageTemplateActionBuilder('Say message', 'hello hello'),
-                    ]
-                );
-                $templateMessage = new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
-                $this->bot->replyMessage($replyToken, $templateMessage);
-                break;
-            case 'carousel':
-                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
-                $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
-                $carouselTemplateBuilder = new CarouselTemplateBuilder([
-                    new CarouselColumnTemplateBuilder('foo', 'bar', $imageUrl, [
-                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                    ]),
-                    new CarouselColumnTemplateBuilder('buz', 'qux', $imageUrl, [
-                        new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
-                        new MessageTemplateActionBuilder('Say message', 'hello hello'),
-                    ]),
-                ]);
-                $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
-                $this->bot->replyMessage($replyToken, $templateMessage);
-                break;
-            case 'imagemap':
-                $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
-                $richMessageUrl = UrlBuilder::buildUrl($this->req, ['static', 'rich']);
-                $imagemapMessageBuilder = new ImagemapMessageBuilder(
-                    $richMessageUrl,
-                    'This is alt text',
-                    new BaseSizeBuilder(1040, 1040),
-                    [
-                        new ImagemapUriActionBuilder(
-                            'https://store.line.me/family/manga/en',
-                            new AreaBuilder(0, 0, 520, 520)
-                        ),
-                        new ImagemapUriActionBuilder(
-                            'https://store.line.me/family/music/en',
-                            new AreaBuilder(520, 0, 520, 520)
-                        ),
-                        new ImagemapUriActionBuilder(
-                            'https://store.line.me/family/play/en',
-                            new AreaBuilder(0, 520, 520, 520)
-                        ),
-                        new ImagemapMessageActionBuilder(
-                            'URANAI!',
-                            new AreaBuilder(520, 520, 520, 520)
+                case 'confirm':
+                    $this->bot->replyMessage(
+                        $replyToken,
+                        new TemplateMessageBuilder(
+                            'Confirm alt text',
+                            new ConfirmTemplateBuilder('Do it?', [
+                                new MessageTemplateActionBuilder('Yes', 'Yes!'),
+                                new MessageTemplateActionBuilder('No', 'No!'),
+                            ])
                         )
-                    ]
-                );
-                $this->bot->replyMessage($replyToken, $imagemapMessageBuilder);
-                break;
-            case 'sticker':
-                $packageId = '1';
-                $stickerId = '3';
-                $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
-                $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
-                break;
-            case 'image':
-                $packageId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
-                $stickerId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
-                $stickerMessageBuilder = new ImageMessageBuilder($packageId, $stickerId);
-                $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
-                break;
-            default:
-                // $this->echoBack($replyToken, $text);
-                $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
-                break;
+                    );
+                    break;
+                case 'buttons':
+                    $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                    $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
+                    $buttonTemplateBuilder = new ButtonTemplateBuilder(
+                        'My button sample',
+                        'Hello my button',
+                        $imageUrl,
+                        [
+                            new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                            new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                            new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
+                            new MessageTemplateActionBuilder('Say message', 'hello hello'),
+                        ]
+                    );
+                    $templateMessage = new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
+                    $this->bot->replyMessage($replyToken, $templateMessage);
+                    break;
+                case 'carousel':
+                    $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                    $imageUrl = UrlBuilder::buildUrl($this->req, ['static', 'buttons', $url]);
+                    $carouselTemplateBuilder = new CarouselTemplateBuilder([
+                        new CarouselColumnTemplateBuilder('foo', 'bar', $imageUrl, [
+                            new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                            new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                        ]),
+                        new CarouselColumnTemplateBuilder('buz', 'qux', $imageUrl, [
+                            new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
+                            new MessageTemplateActionBuilder('Say message', 'hello hello'),
+                        ]),
+                    ]);
+                    $templateMessage = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
+                    $this->bot->replyMessage($replyToken, $templateMessage);
+                    break;
+                case 'imagemap':
+                    $url = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                    $richMessageUrl = UrlBuilder::buildUrl($this->req, ['static', 'rich']);
+                    $imagemapMessageBuilder = new ImagemapMessageBuilder(
+                        $richMessageUrl,
+                        'This is alt text',
+                        new BaseSizeBuilder(1040, 1040),
+                        [
+                            new ImagemapUriActionBuilder(
+                                'https://store.line.me/family/manga/en',
+                                new AreaBuilder(0, 0, 520, 520)
+                            ),
+                            new ImagemapUriActionBuilder(
+                                'https://store.line.me/family/music/en',
+                                new AreaBuilder(520, 0, 520, 520)
+                            ),
+                            new ImagemapUriActionBuilder(
+                                'https://store.line.me/family/play/en',
+                                new AreaBuilder(0, 520, 520, 520)
+                            ),
+                            new ImagemapMessageActionBuilder(
+                                'URANAI!',
+                                new AreaBuilder(520, 520, 520, 520)
+                            )
+                        ]
+                    );
+                    $this->bot->replyMessage($replyToken, $imagemapMessageBuilder);
+                    break;
+                case 'sticker':
+                    $packageId = '1';
+                    $stickerId = '3';
+                    $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
+                    $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
+                    break;
+                case 'image':
+                    $packageId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                    $stickerId = 'https://kitchenshink.herokuapp.com/public/static/buttons/1040.jpg';
+                    $stickerMessageBuilder = new ImageMessageBuilder($packageId, $stickerId);
+                    $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
+                    break;
+                case 'lapor!':
+                    // TODO: Create Client Database with Active Status
+                    $this->bot->echoBack($replyToken, "Hi ".$userId.",Saya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.");
+                    break;
+                case 'tidak lapor!':
+                    $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
+                    break;
+                default:
+                    $this->bot->replyMessage(
+                        $replyToken,
+                        new TemplateMessageBuilder(
+                            'Confirm alt text',
+                            new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor?', [
+                                new MessageTemplateActionBuilder('Ya', 'lapor!'),
+                                new MessageTemplateActionBuilder('Tidak', 'tidak lapor'),
+                            ])
+                        )
+                    );
+                    break;
+                    // $this->echoBack($replyToken, $text);
+                    // $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
+                    // break;
+            }
         }
     }
 
@@ -209,5 +233,16 @@ class TextMessageHandler implements EventHandler
             'Display name: ' . $profile['displayName'],
             'Status message: ' . $profile['statusMessage']
         );
+    }
+
+    function active($text){
+        //TODO: 1. Response is Query.
+        //TODO: 2. Classify Query if contain Time, Place, or Positioning.
+        //TODO: 3. If there is empty, ask for fill Time, Place, or Positioning.
+        //TODO: 4. When filled all, validate is report is right or not.
+        //TODO: 5. Create posting in twitter, save report in DB, delete status of ACTIVE client.
+        switch($text){
+
+        }
     }
 }
