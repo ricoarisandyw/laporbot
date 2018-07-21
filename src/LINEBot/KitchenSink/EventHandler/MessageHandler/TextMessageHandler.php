@@ -227,6 +227,8 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "SELECT * FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        // Closing connection
+        pg_close($dbconn);
 
         //FIND WHICH DATA IS BLANK
         //SEND ID REPORT TO BE UPDATED
@@ -259,9 +261,6 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 
     private function mulaiLapor($replyToken, $userId){
