@@ -181,7 +181,7 @@ class TextMessageHandler implements EventHandler
                 case 'lapor!':
                     // TODO: Create Client Database with Active Status
                     $userId = $this->textMessage->getUserId();
-                    $message = "Hi ".$userId.",Saya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.";
+                    $message = "Hi ".var_dump($userId).",/nSaya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.";
                     $this->bot->echoBack($replyToken, $message);
                     break;
                 case 'tidak lapor!':
@@ -214,6 +214,25 @@ class TextMessageHandler implements EventHandler
     {
         $this->logger->info("Returns echo message $replyToken: $text");
         $this->bot->replyText($replyToken, $text);
+    }
+
+    private function mulaiLapor($replyToken, $userId){
+        if (!isset($userId)) {
+            $this->bot->replyText($replyToken, "Bot can't use profile API without user ID");
+            return;
+        }
+        $response = $this->bot->getProfile($userId);
+        if (!$response->isSucceeded()) {
+            $this->bot->replyText($replyToken, $response->getRawBody());
+            return;
+        }
+
+        $profile = $response->getJSONDecodedBody();
+        $this->bot->replyText(
+            $replyToken,
+            'Display name: ' . $profile['displayName'],
+            'Status message: ' . $profile['statusMessage']
+        );
     }
 
     private function sendProfile($replyToken, $userId)
