@@ -179,7 +179,6 @@ class TextMessageHandler implements EventHandler
                     $this->bot->replyMessage($replyToken, $stickerMessageBuilder);
                     break;
                 case 'lapor!':
-                    // TODO: Create Client Database with Active Status
                     $userId = $this->textMessage->getUserId();
                     $this->mulaiLapor($replyToken,$userId);
                     break;
@@ -187,16 +186,9 @@ class TextMessageHandler implements EventHandler
                     $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
                     break;
                 default:
-                    $this->bot->replyMessage(
-                        $replyToken,
-                        new TemplateMessageBuilder(
-                            'Confirm alt text',
-                            new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor?', [
-                                new MessageTemplateActionBuilder('Ya', 'lapor!'),
-                                new MessageTemplateActionBuilder('Tidak', 'tidak lapor'),
-                            ])
-                        )
-                    );
+                    // TODO: Check Status user
+                    $userId = $this->textMessage->getUserId();
+                    $this->isActive($userId);
                     break;
                     // $this->echoBack($replyToken, $text);
                     // $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
@@ -215,6 +207,56 @@ class TextMessageHandler implements EventHandler
         $this->bot->replyText($replyToken, $text);
     }
 
+    private function cariKosong($profile,$data){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "SELECT * FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        //FIND WHICH DATA IS BLANK
+        //SEND ID REPORT TO BE UPDATED
+        while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+            if($line["message"]==''){
+                $this->createMessage($profile,$data);
+                $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
+            }else if($line["place"]==''){
+                $this->createPlace($profile,$data);
+                $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
+            }else if($line["disposition"]==''){
+                $this->createDisposition($profile,$data);
+                $this->bot->echoBack($replyToken, 
+                    "Terima kasih atas laporannya.",
+                    "Kalau ada lagi silahkan dilaporkan (moon wink)");
+                $this->deactiveReport($profile);
+            }else{
+                //TODO: Set status user jadi DONE
+                $this->bot->echoBack($replyToken, 
+                    "Terima kasih atas laporannya.",
+                    "Kalau ada lagi silahkan dilaporkan (moon wink)");
+            }
+            // *** COOMING SOON FEATURE ***
+            // }else if($line["content"]){
+                
+            // }else if($line["content"]){
+                
+            // }
+        }
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+
     private function mulaiLapor($replyToken, $userId){
         if (!isset($userId)) {
             $this->bot->replyText($replyToken, "Bot can't use profile API without user ID");
@@ -226,10 +268,15 @@ class TextMessageHandler implements EventHandler
             return;
         }
         $profile = $response->getJSONDecodedBody();
+        
+        //Save User data
+        $this->createReport($profile);
+
+        //Ask for message
         $this->bot->replyText(
             $replyToken,
-            'Display name: ' . $profile['displayName'],
-            json_encode($profile)
+            'Hai'.$profile['displayName']." Silahkan tuliskan keluhan anda"
+            // ,json_encode($profile)
         );
     }
 
@@ -254,14 +301,157 @@ class TextMessageHandler implements EventHandler
         );
     }
 
-    function active($text){
-        //TODO: 1. Response is Query.
-        //TODO: 2. Classify Query if contain Time, Place, or Positioning.
-        //TODO: 3. If there is empty, ask for fill Time, Place, or Positioning.
-        //TODO: 4. When filled all, validate is report is right or not.
-        //TODO: 5. Create posting in twitter, save report in DB, delete status of ACTIVE client.
-        switch($text){
+    private function createReport($profile){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
 
+        // Performing SQL query
+        $query = "INSERT INTO public.report(
+            user_id, created_date, report_date, status)
+            VALUES (".$profile['userId'].",  now(), now(), 'ACTIVE');";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+
+    private function createPlace($profile,$data){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "UPDATE public.report
+        SET location='".$data."' 
+        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+
+    private function createMessage($profile,$data){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "UPDATE public.report
+        SET message='".$data."' 
+        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+
+    private function deactiveReport($profile){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "UPDATE public.report
+        SET status='DONE' 
+        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+
+    private function createDisposition($id,$data){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "UPDATE public.report
+        SET disposition='".$data."' 
+        WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
+    }
+    
+    private function isActive($profile){
+        // Connecting, selecting database
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $dbconn = pg_connect($connection);
+        // or die('Could not connect: ' . pg_last_error());
+
+        // Performing SQL query
+        $query = "SELECT id FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        //IS DATA WITH user_id not ACTIVE?
+        if(pg_num_rows($result)==0){
+            //CREATE REPORT
+            $this->bot->replyMessage(
+                $replyToken,
+                new TemplateMessageBuilder(
+                    'Confirm alt text',
+                    new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor?', [
+                        new MessageTemplateActionBuilder('Ya', 'lapor!'),
+                        new MessageTemplateActionBuilder('Tidak', 'tidak lapor'),
+                    ])
+                )
+            );
+        }else{
+            //Cari data kosong
+            $this->cariKosong($profile);
         }
+
+        // Free resultset
+        pg_free_result($result);
+
+        // Closing connection
+        pg_close($dbconn);
     }
 }
