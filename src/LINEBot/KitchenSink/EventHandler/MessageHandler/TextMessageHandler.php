@@ -258,7 +258,7 @@ class TextMessageHandler implements EventHandler
         }
         pg_free_result($result);
         // Closing connection
-        pg_close($dbconn);
+        // pg_close($dbconn);
         
     }
 
@@ -347,7 +347,7 @@ class TextMessageHandler implements EventHandler
         // Free resultset
         pg_free_result($result);
         // Closing connection
-        pg_close($dbconn);
+        // pg_close($dbconn);
     }
 
     private function createMessage($profile,$data){
@@ -368,7 +368,7 @@ class TextMessageHandler implements EventHandler
         // Free resultset
         pg_free_result($result);
         // Closing connection
-        pg_close($dbconn);
+        //pg_close($dbconn);
     }
 
     private function deactiveReport($profile){
@@ -390,7 +390,7 @@ class TextMessageHandler implements EventHandler
         // Free resultset
         pg_free_result($result);
         // Closing connection
-        pg_close($dbconn);
+        //pg_close($dbconn);
     }
 
     private function createDisposition($id,$data){
@@ -411,7 +411,7 @@ class TextMessageHandler implements EventHandler
         // Free resultset
         pg_free_result($result);
         // Closing connection
-        pg_close($dbconn);
+        //pg_close($dbconn);
     }
     
     private function isActive($profile,$replyToken,$text){
@@ -442,15 +442,15 @@ class TextMessageHandler implements EventHandler
                     ])
                 )
             );
-            // Free resultset
-            pg_free_result($result);
-            // Closing connection
-            pg_close($dbconn);
+            // // Free resultset
+            // pg_free_result($result);
+            // // Closing connection
+            // pg_close($dbconn);
         }else{ //NO
-            // Free resultset
-            pg_free_result($result);
-            // Closing connection
-            pg_close($dbconn);
+            // // Free resultset
+            // pg_free_result($result);
+            // // Closing connection
+            // pg_close($dbconn);
             //Cari data kosong
             $this->cariKosong($profile,$replyToken,$text);
         }
