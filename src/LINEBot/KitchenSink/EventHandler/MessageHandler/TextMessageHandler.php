@@ -231,27 +231,19 @@ class TextMessageHandler implements EventHandler
         //FIND WHICH DATA IS BLANK
         //SEND ID REPORT TO BE UPDATED
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-            if($line["message"]==''){
-                // Closing connection
-                pg_close($dbconn);
+            if($line["message"]==''){                
                 $this->createMessage($profile,$text);
                 $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
             }else if($line["location"]==''){
-                // Closing connection
-                pg_close($dbconn);
                 $this->createPlace($profile,$text);
                 $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
-                // Closing connection
-                pg_close($dbconn);
                 $this->createDisposition($profile,$text);
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
                 $this->deactiveReport($profile);
             }else{
-                // Closing connection
-                pg_close($dbconn);
                 //TODO: Set status user jadi DONE
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
@@ -264,6 +256,10 @@ class TextMessageHandler implements EventHandler
                 
             // }
         }
+        pg_free_result($result);
+        // Closing connection
+        pg_close($dbconn);
+        
     }
 
     private function mulaiLapor($replyToken, $userId){
@@ -368,11 +364,11 @@ class TextMessageHandler implements EventHandler
         SET message='".$data."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query);
-        // or die('Query failed: ' . pg_last_error());
-        // Closing connection
-        pg_close($dbconn);
+        
         // Free resultset
         pg_free_result($result);
+        // Closing connection
+        pg_close($dbconn);
     }
 
     private function deactiveReport($profile){
