@@ -195,7 +195,7 @@ class TextMessageHandler implements EventHandler
                     }
 
                     $profile = $response->getJSONDecodedBody();
-                    $this->isActive($profile);
+                    $this->isActive($profile,$replyToken,$text);
                     break;
                     // $this->echoBack($replyToken, $text);
                     // $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
@@ -214,7 +214,7 @@ class TextMessageHandler implements EventHandler
         $this->bot->replyText($replyToken, $text);
     }
 
-    private function cariKosong($profile,$data){
+    private function cariKosong($profile,$replyToken,$text){
         // Connecting, selecting database
         $username = "vkgzqfdpxjrtyk";
         $dbname = "df1bflok3bn0uc";
@@ -232,13 +232,13 @@ class TextMessageHandler implements EventHandler
         //SEND ID REPORT TO BE UPDATED
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             if($line["message"]==''){
-                $this->createMessage($profile,$data);
+                $this->createMessage($profile,$text);
                 $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
             }else if($line["place"]==''){
-                $this->createPlace($profile,$data);
+                $this->createPlace($profile,$text);
                 $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
-                $this->createDisposition($profile,$data);
+                $this->createDisposition($profile,$text);
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
@@ -423,7 +423,7 @@ class TextMessageHandler implements EventHandler
         pg_close($dbconn);
     }
     
-    private function isActive($profile){
+    private function isActive($profile,$replyToken,$text){
         // Connecting, selecting database
         $username = "vkgzqfdpxjrtyk";
         $dbname = "df1bflok3bn0uc";
@@ -452,7 +452,7 @@ class TextMessageHandler implements EventHandler
             );
         }else{
             //Cari data kosong
-            $this->cariKosong($profile);
+            $this->cariKosong($profile,$replyToken,$text);
         }
 
         // Free resultset
