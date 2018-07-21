@@ -181,7 +181,6 @@ class TextMessageHandler implements EventHandler
                 case 'lapor!':
                     // TODO: Create Client Database with Active Status
                     $messageTemp = "Hi ".$userId.",Saya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.";
-                    console.log("Test Log");
                     $this->bot->echoBack($replyToken, var_dump($userId));
                     break;
                 case 'tidak lapor!':
