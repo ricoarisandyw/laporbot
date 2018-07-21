@@ -317,7 +317,8 @@ class TextMessageHandler implements EventHandler
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
-
+        // Closing connection
+        pg_close($dbconn);
         // Performing SQL query
         $query = "INSERT INTO public.report(
             user_id, created_date, report_date, status)
@@ -326,9 +327,6 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 
     private function createPlace($profile,$data){
@@ -341,6 +339,8 @@ class TextMessageHandler implements EventHandler
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
 
+        // Closing connection
+        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET location='".$data."' 
@@ -349,9 +349,6 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 
     private function createMessage($profile,$data){
@@ -363,7 +360,8 @@ class TextMessageHandler implements EventHandler
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
-
+        // Closing connection
+        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET message='".$data."' 
@@ -372,9 +370,6 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 
     private function deactiveReport($profile){
@@ -386,7 +381,8 @@ class TextMessageHandler implements EventHandler
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
-
+        // Closing connection
+        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET status='DONE' 
@@ -395,9 +391,6 @@ class TextMessageHandler implements EventHandler
 
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 
     private function createDisposition($id,$data){
@@ -410,17 +403,15 @@ class TextMessageHandler implements EventHandler
         $dbconn = pg_connect($connection);
         // or die('Could not connect: ' . pg_last_error());
 
+        // Closing connection
+        pg_close($dbconn);
         // Performing SQL query
         $query = "UPDATE public.report
         SET disposition='".$data."' 
         WHERE user_id='".$userId."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
     
     private function isActive($profile,$replyToken,$text){
@@ -434,11 +425,13 @@ class TextMessageHandler implements EventHandler
         // or die('Could not connect: ' . pg_last_error());
 
         // Performing SQL query
-        $query = "SELECT id FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
+        $query = "SELECT * FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
+        // Closing connection
+        pg_close($dbconn);
         //IS DATA WITH user_id not ACTIVE?
-        if(pg_num_rows($result)==0){
+        if(pg_num_rows($result)==0){ //YES
             //CREATE REPORT
             $this->bot->replyMessage(
                 $replyToken,
@@ -450,15 +443,11 @@ class TextMessageHandler implements EventHandler
                     ])
                 )
             );
-        }else{
+        }else{ //NO
             //Cari data kosong
             $this->cariKosong($profile,$replyToken,$text);
         }
-
         // Free resultset
         pg_free_result($result);
-
-        // Closing connection
-        pg_close($dbconn);
     }
 }
