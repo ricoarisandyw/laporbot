@@ -232,22 +232,16 @@ class TextMessageHandler implements EventHandler
         //SEND ID REPORT TO BE UPDATED
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             if($line["message"]==''){
-                // Free resultset
-                pg_free_result($result);
                 // Closing connection
                 pg_close($dbconn);
                 $this->createMessage($profile,$text);
                 $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
-            }else if($line["place"]==''){
-                // Free resultset
-                pg_free_result($result);
+            }else if($line["location"]==''){
                 // Closing connection
                 pg_close($dbconn);
                 $this->createPlace($profile,$text);
                 $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
-                // Free resultset
-                pg_free_result($result);
                 // Closing connection
                 pg_close($dbconn);
                 $this->createDisposition($profile,$text);
@@ -256,8 +250,6 @@ class TextMessageHandler implements EventHandler
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
                 $this->deactiveReport($profile);
             }else{
-                // Free resultset
-                pg_free_result($result);
                 // Closing connection
                 pg_close($dbconn);
                 //TODO: Set status user jadi DONE
