@@ -426,7 +426,8 @@ class TextMessageHandler implements EventHandler
 
         // Performing SQL query
         $query = "SELECT * FROM public.report WHERE user_id='$userId' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        $result = pg_query($query);
+        // or die('Query failed: ' . pg_last_error());
 
         // Closing connection
         pg_close($dbconn);
