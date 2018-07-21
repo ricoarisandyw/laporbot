@@ -180,7 +180,8 @@ class TextMessageHandler implements EventHandler
                     break;
                 case 'lapor!':
                     // TODO: Create Client Database with Active Status
-                    $this->bot->echoBack($replyToken, "Hi ".$userId.",Saya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.");
+                    $messageTemp = "Hi ".$userId.",Saya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.";
+                    $this->bot->echoBack($replyToken, $messageTemp);
                     break;
                 case 'tidak lapor!':
                     $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
