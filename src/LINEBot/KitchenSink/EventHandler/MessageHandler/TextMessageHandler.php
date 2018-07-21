@@ -321,7 +321,7 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "INSERT INTO public.report(
             user_id, created_date, report_date, status)
-            VALUES (".$profile['userId'].",  now(), now(), 'ACTIVE');";
+            VALUES ('".$profile['userId']."',  now(), now(), 'ACTIVE');";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         // Free resultset
