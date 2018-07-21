@@ -227,25 +227,39 @@ class TextMessageHandler implements EventHandler
         // Performing SQL query
         $query = "SELECT * FROM public.report WHERE user_id='".$userId."' AND status='ACTIVE';";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-        // Closing connection
-        pg_close($dbconn);
 
         //FIND WHICH DATA IS BLANK
         //SEND ID REPORT TO BE UPDATED
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             if($line["message"]==''){
+                // Free resultset
+                pg_free_result($result);
+                // Closing connection
+                pg_close($dbconn);
                 $this->createMessage($profile,$text);
                 $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
             }else if($line["place"]==''){
+                // Free resultset
+                pg_free_result($result);
+                // Closing connection
+                pg_close($dbconn);
                 $this->createPlace($profile,$text);
                 $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
+                // Free resultset
+                pg_free_result($result);
+                // Closing connection
+                pg_close($dbconn);
                 $this->createDisposition($profile,$text);
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
                 $this->deactiveReport($profile);
             }else{
+                // Free resultset
+                pg_free_result($result);
+                // Closing connection
+                pg_close($dbconn);
                 //TODO: Set status user jadi DONE
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
@@ -258,9 +272,6 @@ class TextMessageHandler implements EventHandler
                 
             // }
         }
-
-        // Free resultset
-        pg_free_result($result);
     }
 
     private function mulaiLapor($replyToken, $userId){
@@ -429,8 +440,6 @@ class TextMessageHandler implements EventHandler
         $result = pg_query($query);
         // or die('Query failed: ' . pg_last_error());
 
-        // Closing connection
-        pg_close($dbconn);
         //IS DATA WITH user_id not ACTIVE?
         if(pg_num_rows($result)==0){ //YES
             //CREATE REPORT
@@ -444,11 +453,17 @@ class TextMessageHandler implements EventHandler
                     ])
                 )
             );
+            // Free resultset
+            pg_free_result($result);
+            // Closing connection
+            pg_close($dbconn);
         }else{ //NO
+            // Free resultset
+            pg_free_result($result);
+            // Closing connection
+            pg_close($dbconn);
             //Cari data kosong
             $this->cariKosong($profile,$replyToken,$text);
         }
-        // Free resultset
-        pg_free_result($result);
     }
 }
