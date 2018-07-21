@@ -181,8 +181,7 @@ class TextMessageHandler implements EventHandler
                 case 'lapor!':
                     // TODO: Create Client Database with Active Status
                     $userId = $this->textMessage->getUserId();
-                    $message = "Hi ".var_dump($userId).",/nSaya siap mendengarkan laporan kamu, silahkan kamu diungkapkan.";
-                    $this->bot->echoBack($replyToken, $message);
+                    $this->mulaiLapor($replyToken,$userId);
                     break;
                 case 'tidak lapor!':
                     $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
@@ -226,7 +225,6 @@ class TextMessageHandler implements EventHandler
             $this->bot->replyText($replyToken, $response->getRawBody());
             return;
         }
-
         $profile = $response->getJSONDecodedBody();
         $this->bot->replyText(
             $replyToken,
