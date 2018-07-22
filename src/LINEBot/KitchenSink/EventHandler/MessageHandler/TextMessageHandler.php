@@ -65,16 +65,17 @@ class TextMessageHandler implements EventHandler
         $this->logger = $logger;
         $this->req = $req;
         $this->textMessage = $textMessage;
+    }
+
+    public function handle()
+    {
         $username = "vkgzqfdpxjrtyk";
         $dbname = "df1bflok3bn0uc";
         $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
         $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
         $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $this->dbconn = pg_connect($connection);
-    }
+        $dbconn = pg_connect($connection);
 
-    public function handle()
-    {
         $text = $this->textMessage->getText();
         $replyToken = $this->textMessage->getReplyToken();
         $this->logger->info("Got text message from $replyToken: $text");
@@ -202,7 +203,7 @@ class TextMessageHandler implements EventHandler
                 $this->isActive($profile,$replyToken,$text);
                 break;
         }
-        pg_close($this->dbconn);
+        pg_close($dbconn);
     }
 
     /**
