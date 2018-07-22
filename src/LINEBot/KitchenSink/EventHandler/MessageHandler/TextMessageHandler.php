@@ -37,7 +37,8 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
-use TWEET\Twitter;
+
+require_once '/vendor/dg/twitter-php/twitter.class.php';
 
 class TextMessageHandler implements EventHandler
 {
@@ -249,8 +250,13 @@ class TextMessageHandler implements EventHandler
                 $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
                 $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
                 error_log("Login Tweeter Success . . .");
-                $twitter->send('I am fine today.');
-                error_log("Tweet success . . .");
+                try {
+                    $tweet = $twitter->send('I am fine'); // you can add $imagePath or array of image paths as second argument
+                    error_log("Tweet success . . .");
+                } catch (TwitterException $e) {
+                    echo 'Error: ' . $e->getMessage();
+                    error_log("Tweet Error . . ." . $e->getMessage());
+                }
             }else{
                 error_log("All Data Filled . . .");
                 $this->bot->replyText($replyToken, 
