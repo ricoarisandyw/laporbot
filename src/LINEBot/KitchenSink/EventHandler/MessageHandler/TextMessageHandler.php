@@ -252,6 +252,8 @@ class TextMessageHandler implements EventHandler
                     "statuses/update", 
                     ["status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\nLokasi Kejadian\t\t: ".$line["location"]."\nDitujukan ke\t\t: ".$line["disposition"]."\nKeluhan\t\t: ".$line["message"]]
                 );
+                $this->bot->replyText($replyToken, 
+                    "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda");
                 error_log("Tweet success . . .");
             }else{
                 error_log("All Data Filled . . .");
