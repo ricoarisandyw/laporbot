@@ -38,7 +38,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
-require 'db.php';
+require '/db.php';
 
 class TextMessageHandler implements EventHandler
 {
@@ -64,7 +64,7 @@ class TextMessageHandler implements EventHandler
         $this->logger = $logger;
         $this->req = $req;
         $this->textMessage = $textMessage;
-        $this->dbconn = getDB();
+        getDB();
     }
 
     public function handle()
