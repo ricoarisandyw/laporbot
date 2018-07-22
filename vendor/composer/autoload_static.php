@@ -38,13 +38,10 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         array (
             'FastRoute\\' => 10,
         ),
-        'D' => 
-        array (
-            'DG\\' => 3,
-        ),
         'A' => 
         array (
             'Abraham\\TwitterOAuth\\' => 21,
+            'Abraham\\' => 8,
         ),
     );
 
@@ -82,13 +79,13 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
-        'DG\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
         'Abraham\\TwitterOAuth\\' => 
         array (
             0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
+        ),
+        'Abraham\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
