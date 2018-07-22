@@ -38,8 +38,6 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
-require_once 'db.php';
-
 class TextMessageHandler implements EventHandler
 {
     /** @var LINEBot $bot */
@@ -205,9 +203,6 @@ class TextMessageHandler implements EventHandler
                     $profile = $response->getJSONDecodedBody();
                     $this->isActive($profile,$replyToken,$text);
                     break;
-                    // $this->echoBack($replyToken, $text);
-                    // $this->echoBack($replyToken, "Maaf, saya tidak paham maksud anda");
-                    // break;
             }
         }
         pg_close($this->dbconn);
