@@ -255,13 +255,15 @@ class TextMessageHandler implements EventHandler
                         Keluhan\t\t: ".$line["message"]
                     ]
                 );
-                $this->bot->replyText($replyToken, [
-                    "Terima kasih atas laporan anda. (moon wink)",
-                    "status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\n
-                        Lokasi Kejadian\t\t: ".$line["location"]."\n
-                        Ditujukan ke\t\t: ".$text."\n
-                        Keluhan\t\t: ".$line["message"],
-                    "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda"]
+                $this->bot->replyText($replyToken, 
+                    "Terima kasih atas laporan anda. (moon wink)", 
+                    [
+                        "status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\n
+                            Lokasi Kejadian\t\t: ".$line["location"]."\n
+                            Ditujukan ke\t\t: ".$text."\n
+                            Keluhan\t\t: ".$line["message"],
+                        "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda"
+                    ]
                 );
                 error_log("Tweet success . . .");
             }else{
