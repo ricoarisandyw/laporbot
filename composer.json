@@ -9,7 +9,8 @@
   },
   "autoload": {
     "psr-4": {
-      "LINE\\": "src/"
+      "LINE\\": "src/",
+      "DG\\": "src/"
     }
   }
 }
