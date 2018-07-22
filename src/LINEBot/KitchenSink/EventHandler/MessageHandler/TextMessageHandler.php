@@ -190,7 +190,7 @@ class TextMessageHandler implements EventHandler
                 $this->mulaiLapor($replyToken,$userId);
                 break;
             case 'tidak lapor!':
-                $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
+                $this->bot->replyText($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
                 break;
             default:
                 error_log("Check User Status . . .");
@@ -251,7 +251,7 @@ class TextMessageHandler implements EventHandler
                     $content = $twitter->get("account/verifiy_credentials");
                     error_log("Login Tweeter Success . . .");
                 }catch(Exception $e){
-                    error_log("Login Failed . . .". $e->getMessage());
+                    error_log("Login Failed . . .");
                 }
                 $new_status = $twitter->post("status/update",["status"=>"Hi, this tweet is from API"]);
                 error_log("Tweet success . . .");
