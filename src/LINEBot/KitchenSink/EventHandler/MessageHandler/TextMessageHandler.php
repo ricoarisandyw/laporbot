@@ -254,7 +254,7 @@ class TextMessageHandler implements EventHandler
                 );
                 $this->bot->replyText($replyToken, 
                     "Terima kasih sudah mau melapor ke saya. \u{100005}", 
-                    "Kujungi \u{10002E} https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update dari laporanmu."
+                    "Kujungi \u{10002E} https://twitter.com/LUnnoficial/status/".$status->{"id"}." untuk melihat update dari laporanmu."
                 );
                 error_log("Tweet success . . .");
             }else{
