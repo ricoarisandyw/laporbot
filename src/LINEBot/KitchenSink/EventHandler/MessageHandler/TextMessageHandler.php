@@ -238,14 +238,13 @@ class TextMessageHandler implements EventHandler
             }else if($line["disposition"]==''){
                 $this->createDisposition($profile,$text);
                 error_log("Fill Disposition Data . . .");
-                $this->bot->echoBack($replyToken, 
-                    "Terima kasih atas laporannya.",
-                    "Kalau ada lagi silahkan dilaporkan (moon wink)");
+                $this->bot->replyText($replyToken, 
+                    "Terima kasih atas laporan anda.");
                 $this->deactiveReport($profile);
             }else{
                 //TODO: Set status user jadi DONE
                 error_log("All Data Filled . . .");
-                $this->bot->echoBack($replyToken, 
+                $this->bot->replyText($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
             }
@@ -256,6 +255,11 @@ class TextMessageHandler implements EventHandler
                 
             // }
         }
+    }
+
+    private function validasoLapor($replyToken,$profile)
+    {
+        
     }
 
     private function mulaiLapor($replyToken, $userId){
