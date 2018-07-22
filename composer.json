@@ -10,8 +10,7 @@
   },
   "autoload": {
     "psr-4": {
-      "LINE\\": "src/",
-      "Abraham\\": "src/"
+      "LINE\\": "src/"
     }
   }
 }
