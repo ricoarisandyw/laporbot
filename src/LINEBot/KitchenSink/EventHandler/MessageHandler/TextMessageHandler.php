@@ -230,11 +230,11 @@ class TextMessageHandler implements EventHandler
             if($line["message"]==''){                
                 $this->createMessage($profile,$text);
                 error_log("Fill Message Data . . .");
-                $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
+                $this->bot->replyText($replyToken, "Kejadiannya ada dimana ya?");
             }else if($line["location"]==''){
                 $this->createPlace($profile,$text);
                 error_log("Fill Location Data . . .");
-                $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
+                $this->bot->replyText($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
                 $this->createDisposition($profile,$text);
                 error_log("Fill Disposition Data . . .");
@@ -322,17 +322,12 @@ class TextMessageHandler implements EventHandler
         $result = pg_query($query);
     }
 
-    private function createMessage($profile,$data){
+    private function createMessage($profile,$text){
         // Performing SQL query
         $query = "UPDATE public.report
-        SET message='".$data."' 
+        SET message='".$text."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query);
-        
-        // Free resultset
-        pg_free_result($result);
-        // Closing connection
-        //pg_close($dbconn);
     }
 
     private function deactiveReport($profile){
