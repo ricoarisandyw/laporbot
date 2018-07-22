@@ -69,7 +69,7 @@ class TextMessageHandler implements EventHandler
 
     public function handle()
     {
-        error_log("Test Error");
+        error_log("Startin Handle . . .");
         $username = "vkgzqfdpxjrtyk";
         $dbname = "df1bflok3bn0uc";
         $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
@@ -194,6 +194,7 @@ class TextMessageHandler implements EventHandler
                 break;
             default:
                 // TODO: Check Status user
+                error_log("Check User Status . . .");
                 $userId = $this->textMessage->getUserId();
                 $response = $this->bot->getProfile($userId);
                 if (!$response->isSucceeded()) {
@@ -225,20 +226,25 @@ class TextMessageHandler implements EventHandler
         //FIND WHICH DATA IS BLANK
         //SEND ID REPORT TO BE UPDATED
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+            error_log("Find miss Data . . .");
             if($line["message"]==''){                
                 $this->createMessage($profile,$text);
+                error_log("Fill Message Data . . .");
                 $this->bot->echoBack($replyToken, "Kejadiannya ada dimana ya?");
             }else if($line["location"]==''){
                 $this->createPlace($profile,$text);
+                error_log("Fill Location Data . . .");
                 $this->bot->echoBack($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
             }else if($line["disposition"]==''){
                 $this->createDisposition($profile,$text);
+                error_log("Fill Disposition Data . . .");
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
                 $this->deactiveReport($profile);
             }else{
                 //TODO: Set status user jadi DONE
+                error_log("All Data Filled . . .");
                 $this->bot->echoBack($replyToken, 
                     "Terima kasih atas laporannya.",
                     "Kalau ada lagi silahkan dilaporkan (moon wink)");
@@ -352,6 +358,7 @@ class TextMessageHandler implements EventHandler
 
         //IS DATA WITH user_id ACTIVE?
         if(pg_num_rows($result)==0){ //NOT FOUND
+            error_log("User not Active . . .");
             //CREATE REPORT
             $this->bot->replyMessage(
                 $replyToken,
@@ -364,6 +371,7 @@ class TextMessageHandler implements EventHandler
                 )
             );
         }else{ //FOUND
+            error_log("User Active . . .");
             $this->cariKosong($profile,$replyToken,$text);
         }
     }
