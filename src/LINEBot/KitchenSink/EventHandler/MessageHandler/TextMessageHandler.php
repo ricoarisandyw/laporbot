@@ -343,16 +343,12 @@ class TextMessageHandler implements EventHandler
         $result = pg_query($query);
     }
 
-    private function createDisposition($id,$data){
+    private function createDisposition($profile,$text){
         // Performing SQL query
         $query = "UPDATE public.report
-        SET disposition='".$data."' 
+        SET disposition='".$text."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query);
-        // Free resultset
-        pg_free_result($result);
-        // Closing connection
-        //pg_close($dbconn);
     }
     
     private function isActive($profile,$replyToken,$text){
