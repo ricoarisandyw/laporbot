@@ -229,11 +229,11 @@ class TextMessageHandler implements EventHandler
             if($line["message"]==''){                
                 $this->createMessage($profile,$text);
                 error_log("Fill Message Data . . .");
-                $this->bot->replyText($replyToken, "Kejadiannya ada dimana ya? \u{DBC0}\u{DC84}");
+                $this->bot->replyText($replyToken, "Oh begitu, itu kejadiannya ada dimana ya? \u{100011}");
             }else if($line["location"]==''){
                 $this->createPlace($profile,$text);
                 error_log("Fill Location Data . . .");
-                $this->bot->replyText($replyToken, "Laporan ini mau ditujukan ke siapa ya?");
+                $this->bot->replyText($replyToken, "Laporan ini mau kamu tujukan kepada siapa ya?");
             }else if($line["disposition"]==''){
                 $this->createDisposition($profile,$text);
                 error_log("Fill Disposition Data . . .");
@@ -253,8 +253,8 @@ class TextMessageHandler implements EventHandler
                     ]
                 );
                 $this->bot->replyText($replyToken, 
-                    "Terima kasih atas laporan anda. (moon wink)", 
-                    "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda"
+                    "Terima kasih sudah mau melapor ke saya. \u{100005}", 
+                    "Kujungi \u{10002E} https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update dari laporanmu."
                 );
                 error_log("Tweet success . . .");
             }else{
@@ -295,7 +295,7 @@ class TextMessageHandler implements EventHandler
         //Ask for message
         $this->bot->replyText(
             $replyToken,
-            'Hai '.$profile['displayName']." Silahkan tuliskan keluhan anda \u{100041}"
+            'Hai '.$profile['displayName'].". Kamu bisa tuliskan keluhanmu disini \u{100041}"
             // ,json_encode($profile)
         );
     }
@@ -374,7 +374,7 @@ class TextMessageHandler implements EventHandler
                 $replyToken,
                 new TemplateMessageBuilder(
                     'Confirm alt text',
-                    new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor? \u{100001}', [
+                    new ConfirmTemplateBuilder('Apakah kamu ingin melaporkan sesuatu?', [
                         new MessageTemplateActionBuilder('Ya', 'lapor!'),
                         new MessageTemplateActionBuilder('Tidak', 'tidak lapor!'),
                     ])
