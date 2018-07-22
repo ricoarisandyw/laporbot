@@ -69,6 +69,7 @@ class TextMessageHandler implements EventHandler
 
     public function handle()
     {
+        error_log("Test Error");
         $username = "vkgzqfdpxjrtyk";
         $dbname = "df1bflok3bn0uc";
         $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
