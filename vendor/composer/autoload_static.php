@@ -8,6 +8,7 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
 {
     public static $files = array (
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
+        '89c5c8c5396a3a1f7402830cd218dcc2' => __DIR__ . '/..' . '/dhaval/image-uploader/src/ImageUploader.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -85,12 +86,29 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         ),
     );
 
+    public static $classMap = array (
+        'Twitter' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
+        'TwitterException' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
+        'Twitter_OAuthConsumer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthDataStore' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthException' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthRequest' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthServer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthSignatureMethod' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthSignatureMethod_HMAC_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthSignatureMethod_PLAINTEXT' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthSignatureMethod_RSA_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthToken' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter_OAuthUtil' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -37,6 +37,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use Twitter\Twitter;
 
 class TextMessageHandler implements EventHandler
 {
@@ -193,7 +194,6 @@ class TextMessageHandler implements EventHandler
                 $this->bot->echoBack($replyToken, "Terima kasih, aku akan selalu ada jika kamu ingin melapor.");
                 break;
             default:
-                // TODO: Check Status user
                 error_log("Check User Status . . .");
                 $userId = $this->textMessage->getUserId();
                 $response = $this->bot->getProfile($userId);
@@ -241,8 +241,16 @@ class TextMessageHandler implements EventHandler
                 $this->bot->replyText($replyToken, 
                     "Terima kasih atas laporan anda. (moon wink)");
                 $this->deactiveReport($profile);
+                //TODO: Send to tweeter
+                error_log("Tweeting . . .");
+                $consumerKey = 'GmVRzrbtiDPFuhTGtRyCS0zM0';
+                $accessToken = '231752825-18xWsGdvvZcrywMBxVtk4i1d1AsIe1YzN6w7y7Bk';
+                $accessTokenSecret = 'SVWR1YihOOBkmJegPxmjeiGCXKolGEDJm3dv5W6m0prq0';
+                $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
+                $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+                $twitter->send('I am fine today.');
+                error_log("Tweet success . . .");
             }else{
-                //TODO: Set status user jadi DONE
                 error_log("All Data Filled . . .");
                 $this->bot->replyText($replyToken, 
                     "Terima kasih atas laporannya.",
