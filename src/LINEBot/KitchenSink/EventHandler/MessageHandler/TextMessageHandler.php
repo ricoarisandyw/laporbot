@@ -37,7 +37,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
-use Twitter\Twitter;
+use TWEET\Twitter;
 
 class TextMessageHandler implements EventHandler
 {
@@ -248,6 +248,7 @@ class TextMessageHandler implements EventHandler
                 $accessTokenSecret = 'SVWR1YihOOBkmJegPxmjeiGCXKolGEDJm3dv5W6m0prq0';
                 $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
                 $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+                error_log("Login Tweeter Success . . .");
                 $twitter->send('I am fine today.');
                 error_log("Tweet success . . .");
             }else{
