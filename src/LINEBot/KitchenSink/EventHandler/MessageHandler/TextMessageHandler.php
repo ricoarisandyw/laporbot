@@ -37,7 +37,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
-use dg\Twitter;
+use Abraham\TwitterOauth\TwitterOauth;
 
 class TextMessageHandler implements EventHandler
 {
@@ -246,15 +246,10 @@ class TextMessageHandler implements EventHandler
                 $accessToken = '231752825-18xWsGdvvZcrywMBxVtk4i1d1AsIe1YzN6w7y7Bk';
                 $accessTokenSecret = 'SVWR1YihOOBkmJegPxmjeiGCXKolGEDJm3dv5W6m0prq0';
                 $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
-                $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+                $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
                 error_log("Login Tweeter Success . . .");
-                try {
-                    $tweet = $twitter->send('I am fine'); // you can add $imagePath or array of image paths as second argument
-                    error_log("Tweet success . . .");
-                } catch (TwitterException $e) {
-                    echo 'Error: ' . $e->getMessage();
-                    error_log("Tweet Error . . ." . $e->getMessage());
-                }
+                $new_status = $twitter->post("status/update",["status"=>"Hi, this tweet is from API"]);
+                error_log("Tweet success . . .");
             }else{
                 error_log("All Data Filled . . .");
                 $this->bot->replyText($replyToken, 

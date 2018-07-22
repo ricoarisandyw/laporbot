@@ -42,6 +42,10 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         array (
             'DG\\' => 3,
         ),
+        'A' => 
+        array (
+            'Abraham\\TwitterOAuth\\' => 21,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -82,6 +86,10 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
+        'Abraham\\TwitterOAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -95,8 +103,6 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
     );
 
     public static $classMap = array (
-        'DG\\Twitter' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
-        'DG\\TwitterException' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
         'DG\\Twitter_OAuthConsumer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
         'DG\\Twitter_OAuthDataStore' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
         'DG\\Twitter_OAuthException' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
@@ -108,6 +114,8 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
         'DG\\Twitter_OAuthSignatureMethod_RSA_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
         'DG\\Twitter_OAuthToken' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
         'DG\\Twitter_OAuthUtil' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'Twitter' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
+        'TwitterException' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

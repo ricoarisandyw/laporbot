@@ -6,8 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'DG\\Twitter' => $vendorDir . '/dg/twitter-php/src/Twitter.php',
-    'DG\\TwitterException' => $vendorDir . '/dg/twitter-php/src/Twitter.php',
     'DG\\Twitter_OAuthConsumer' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
     'DG\\Twitter_OAuthDataStore' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
     'DG\\Twitter_OAuthException' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
@@ -19,4 +17,6 @@ return array(
     'DG\\Twitter_OAuthSignatureMethod_RSA_SHA1' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
     'DG\\Twitter_OAuthToken' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
     'DG\\Twitter_OAuthUtil' => $vendorDir . '/dg/twitter-php/src/OAuth.php',
+    'Twitter' => $vendorDir . '/dg/twitter-php/src/Twitter.php',
+    'TwitterException' => $vendorDir . '/dg/twitter-php/src/Twitter.php',
 );
