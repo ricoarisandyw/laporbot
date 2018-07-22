@@ -38,6 +38,8 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
+require 'db.php';
+
 class TextMessageHandler implements EventHandler
 {
     /** @var LINEBot $bot */
@@ -62,6 +64,7 @@ class TextMessageHandler implements EventHandler
         $this->logger = $logger;
         $this->req = $req;
         $this->textMessage = $textMessage;
+        $this->dbconn = getDB();
     }
 
     public function handle()
@@ -215,18 +218,9 @@ class TextMessageHandler implements EventHandler
     }
 
     private function cariKosong($profile,$replyToken,$text){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
-
         // Performing SQL query
         $query = "SELECT * FROM public.report WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        $result = pg_query($query);
 
         //FIND WHICH DATA IS BLANK
         //SEND ID REPORT TO BE UPDATED
@@ -256,10 +250,6 @@ class TextMessageHandler implements EventHandler
                 
             // }
         }
-        pg_free_result($result);
-        // Closing connection
-        // pg_close($dbconn);
-        
     }
 
     private function mulaiLapor($replyToken, $userId){
@@ -307,58 +297,22 @@ class TextMessageHandler implements EventHandler
     }
 
     private function createReport($profile){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
-        // Closing connection
-        pg_close($dbconn);
         // Performing SQL query
         $query = "INSERT INTO public.report(
             user_id, created_date, report_date, status)
             VALUES ('".$profile['userId']."',  now(), now(), 'ACTIVE');";
         $result = pg_query($query);
-        //or die('Query failed: ' . pg_last_error());
-
-        // Free resultset
-        pg_free_result($result);
     }
 
     private function createPlace($profile,$data){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
-
         // Performing SQL query
         $query = "UPDATE public.report
         SET location='".$data."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-        // Free resultset
-        pg_free_result($result);
-        // Closing connection
-        // pg_close($dbconn);
+        $result = pg_query($query);
     }
 
     private function createMessage($profile,$data){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
         // Performing SQL query
         $query = "UPDATE public.report
         SET message='".$data."' 
@@ -372,42 +326,19 @@ class TextMessageHandler implements EventHandler
     }
 
     private function deactiveReport($profile){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
         // Performing SQL query
         $query = "UPDATE public.report
         SET status='DONE' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query);
-        //or die('Query failed: ' . pg_last_error());
-
-        // Free resultset
-        pg_free_result($result);
-        // Closing connection
-        //pg_close($dbconn);
     }
 
     private function createDisposition($id,$data){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
-
         // Performing SQL query
         $query = "UPDATE public.report
         SET disposition='".$data."' 
         WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        $result = pg_query($query);
         // Free resultset
         pg_free_result($result);
         // Closing connection
@@ -415,19 +346,9 @@ class TextMessageHandler implements EventHandler
     }
     
     private function isActive($profile,$replyToken,$text){
-        // Connecting, selecting database
-        $username = "vkgzqfdpxjrtyk";
-        $dbname = "df1bflok3bn0uc";
-        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
-        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
-        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
-        $dbconn = pg_connect($connection);
-        // or die('Could not connect: ' . pg_last_error());
-
         // Performing SQL query
         $query = "SELECT * FROM public.report WHERE user_id='".$profile["userId"]."' AND status='ACTIVE';";
         $result = pg_query($query);
-        // or die('Query failed: ' . pg_last_error());
 
         //IS DATA WITH user_id not ACTIVE?
         if(pg_num_rows($result)==0){ //YES
