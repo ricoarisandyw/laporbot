@@ -38,7 +38,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
-require_once "../../../../twitter/twitter.class.php";
+require_once __DIR__."../../../../twitter/twitter.class.php";
 
 class TextMessageHandler implements EventHandler
 {
