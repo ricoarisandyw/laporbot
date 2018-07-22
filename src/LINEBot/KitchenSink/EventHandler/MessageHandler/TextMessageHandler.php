@@ -240,16 +240,16 @@ class TextMessageHandler implements EventHandler
                 $this->deactiveReport($profile);
                 //TODO: Send to tweeter
                 error_log("Tweeting . . .");
-                $consumerKey = 'GmVRzrbtiDPFuhTGtRyCS0zM0';
-                $accessToken = '231752825-18xWsGdvvZcrywMBxVtk4i1d1AsIe1YzN6w7y7Bk';
-                $accessTokenSecret = 'SVWR1YihOOBkmJegPxmjeiGCXKolGEDJm3dv5W6m0prq0';
-                $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
+                $consumerKey = 'fCxzrw6YasXvDygsTofwWH3Ny';
+                $accessToken = '1021038442199711745-NED7QntahAbkDoHPFBxZubnTW6I2Li';
+                $accessTokenSecret = 'RySDf9juPsQMY5HGjJxyNkjMkUditRmFjw5FUKfxtYALw';
+                $consumerSecret = '7wHjfohzJDF5Z4eKJF3hnIKFInJjjOSi6Sqdhtz2MRyvRGfppI';
                 $connection = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
                 error_log("Login Tweeter Success . . .");
                 $status = $connection->post(
                     "statuses/update", 
                     [
-                        "status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\nLokasi Kejadian\t\t: ".$line["location"]."\nDitujukan ke\t\t: ".$text."\nKeluhan\t\t: ".$line["message"]
+                        "status" => "Dari LINE Chatbot LAPOR! (Unofficial) untuk @lapor1708\nLokasi Kejadian\t\t: ".$line["location"]."\nDitujukan ke\t\t: ".$text."\nKeluhan\t\t: ".$line["message"]
                     ]
                 );
                 $this->bot->replyText($replyToken, 
