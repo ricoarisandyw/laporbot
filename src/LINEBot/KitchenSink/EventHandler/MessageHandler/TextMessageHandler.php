@@ -48,6 +48,9 @@ class TextMessageHandler implements EventHandler
     private $req;
     /** @var TextMessage $textMessage */
     private $textMessage;
+    /** @var DBConnection $textMessage */
+    private $dbconn;
+    
 
     /**
      * TextMessageHandler constructor.
