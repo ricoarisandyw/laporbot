@@ -229,7 +229,7 @@ class TextMessageHandler implements EventHandler
             if($line["message"]==''){                
                 $this->createMessage($profile,$text);
                 error_log("Fill Message Data . . .");
-                $this->bot->replyText($replyToken, "Kejadiannya ada dimana ya? \uDBC0\uDC84");
+                $this->bot->replyText($replyToken, "Kejadiannya ada dimana ya? \u{DBC0}\u{DC84}");
             }else if($line["location"]==''){
                 $this->createPlace($profile,$text);
                 error_log("Fill Location Data . . .");
@@ -295,7 +295,7 @@ class TextMessageHandler implements EventHandler
         //Ask for message
         $this->bot->replyText(
             $replyToken,
-            'Hai '.$profile['displayName']." Silahkan tuliskan keluhan anda \0x100041"
+            'Hai '.$profile['displayName']." Silahkan tuliskan keluhan anda \u{100041}"
             // ,json_encode($profile)
         );
     }
@@ -374,7 +374,7 @@ class TextMessageHandler implements EventHandler
                 $replyToken,
                 new TemplateMessageBuilder(
                     'Confirm alt text',
-                    new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor? \u100001', [
+                    new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor? \u{100001}', [
                         new MessageTemplateActionBuilder('Ya', 'lapor!'),
                         new MessageTemplateActionBuilder('Tidak', 'tidak lapor!'),
                     ])
