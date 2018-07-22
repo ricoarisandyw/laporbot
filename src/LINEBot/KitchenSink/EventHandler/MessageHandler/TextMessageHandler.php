@@ -246,8 +246,13 @@ class TextMessageHandler implements EventHandler
                 $accessToken = '231752825-18xWsGdvvZcrywMBxVtk4i1d1AsIe1YzN6w7y7Bk';
                 $accessTokenSecret = 'SVWR1YihOOBkmJegPxmjeiGCXKolGEDJm3dv5W6m0prq0';
                 $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
-                $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-                error_log("Login Tweeter Success . . .");
+                try{
+                    $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+                    $content = $twitter->get("account/verifiy_credentials");
+                    error_log("Login Tweeter Success . . .");
+                }catch(Exception $e){
+                    error_log("Login Failed . . .". $e->getMessage());
+                }
                 $new_status = $twitter->post("status/update",["status"=>"Hi, this tweet is from API"]);
                 error_log("Tweet success . . .");
             }else{
@@ -369,7 +374,7 @@ class TextMessageHandler implements EventHandler
                     'Confirm alt text',
                     new ConfirmTemplateBuilder('Hai! Apakah anda ingin melapor?', [
                         new MessageTemplateActionBuilder('Ya', 'lapor!'),
-                        new MessageTemplateActionBuilder('Tidak', 'tidak lapor'),
+                        new MessageTemplateActionBuilder('Tidak', 'tidak lapor!'),
                     ])
                 )
             );
