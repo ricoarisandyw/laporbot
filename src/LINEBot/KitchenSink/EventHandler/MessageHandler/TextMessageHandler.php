@@ -237,8 +237,6 @@ class TextMessageHandler implements EventHandler
             }else if($line["disposition"]==''){
                 $this->createDisposition($profile,$text);
                 error_log("Fill Disposition Data . . .");
-                $this->bot->replyText($replyToken, 
-                    "Terima kasih atas laporan anda. (moon wink)");
                 $this->deactiveReport($profile);
                 //TODO: Send to tweeter
                 error_log("Tweeting . . .");
@@ -250,10 +248,21 @@ class TextMessageHandler implements EventHandler
                 error_log("Login Tweeter Success . . .");
                 $status = $connection->post(
                     "statuses/update", 
-                    ["status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\nLokasi Kejadian\t\t: ".$line["location"]."\nDitujukan ke\t\t: ".$line["disposition"]."\nKeluhan\t\t: ".$line["message"]]
+                    [
+                        "status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\n
+                        Lokasi Kejadian\t\t: ".$line["location"]."\n
+                        Ditujukan ke\t\t: ".$text."\n
+                        Keluhan\t\t: ".$line["message"]
+                    ]
                 );
-                $this->bot->replyText($replyToken, 
-                    "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda");
+                $this->bot->replyText($replyToken, [
+                    "Terima kasih atas laporan anda. (moon wink)",
+                    "status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\n
+                        Lokasi Kejadian\t\t: ".$line["location"]."\n
+                        Ditujukan ke\t\t: ".$text."\n
+                        Keluhan\t\t: ".$line["message"],
+                    "Kujungi https://www.twitter.com/RicoArisandyW/status/".$status->{"id"}." untuk melihat update laporan anda"]
+                );
                 error_log("Tweet success . . .");
             }else{
                 error_log("All Data Filled . . .");
