@@ -239,7 +239,7 @@ class TextMessageHandler implements EventHandler
                 $this->createDisposition($profile,$text);
                 error_log("Fill Disposition Data . . .");
                 $this->bot->replyText($replyToken, 
-                    "Terima kasih atas laporan anda.");
+                    "Terima kasih atas laporan anda. (moon wink)");
                 $this->deactiveReport($profile);
             }else{
                 //TODO: Set status user jadi DONE
