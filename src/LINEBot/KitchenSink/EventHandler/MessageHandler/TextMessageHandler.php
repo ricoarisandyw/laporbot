@@ -37,7 +37,8 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
-use DG\Twitter;
+
+require_once "../../../../vendor/dg/twitter-php/src/twitter.class.php";
 
 class TextMessageHandler implements EventHandler
 {
