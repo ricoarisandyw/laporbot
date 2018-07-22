@@ -21,6 +21,7 @@ use LINE\LINEBot\KitchenSink\Route;
 use LINE\LINEBot\KitchenSink\Setting;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/dg/twitter-php/src/twitter.class.php';
 
 $setting = Setting::getSetting();
 $app = new \Slim\App($setting);
