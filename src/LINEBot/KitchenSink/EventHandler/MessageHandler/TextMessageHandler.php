@@ -248,7 +248,10 @@ class TextMessageHandler implements EventHandler
                 $consumerSecret = 'oWjkuqkvFI5ierKawjwG5aGtjbACnKYgr0ZS3y6LH9OX5muXQu';
                 $connection = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
                 error_log("Login Tweeter Success . . .");
-                $status = $connection->post("statuses/update", ["status" => "From LAPOR! API : @lapor1708\nLocation:".$line["location"]."\nDisposition:".$line["disposition"]."\nContent:".$line["message"]]);
+                $status = $connection->post(
+                    "statuses/update", 
+                    ["status" => "Dari Chatbot LAPOR! (Unofficial) @lapor1708\nLokasi Kejadian\t\t: ".$line["location"]."\nDitujukan ke\t\t: ".$line["disposition"]."\nKeluhan\t\t: ".$line["message"]]
+                );
                 error_log("Tweet success . . .");
             }else{
                 error_log("All Data Filled . . .");
