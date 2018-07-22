@@ -95,19 +95,19 @@ class ComposerStaticInit8e6f5d8bdf00f3da716ab659830a7909
     );
 
     public static $classMap = array (
-        'Twitter' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
-        'TwitterException' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
-        'Twitter_OAuthConsumer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthDataStore' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthException' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthRequest' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthServer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthSignatureMethod' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthSignatureMethod_HMAC_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthSignatureMethod_PLAINTEXT' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthSignatureMethod_RSA_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthToken' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
-        'Twitter_OAuthUtil' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
+        'DG\\TwitterException' => __DIR__ . '/..' . '/dg/twitter-php/src/Twitter.php',
+        'DG\\Twitter_OAuthConsumer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthDataStore' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthException' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthRequest' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthServer' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthSignatureMethod' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthSignatureMethod_HMAC_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthSignatureMethod_PLAINTEXT' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthSignatureMethod_RSA_SHA1' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthToken' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
+        'DG\\Twitter_OAuthUtil' => __DIR__ . '/..' . '/dg/twitter-php/src/OAuth.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
