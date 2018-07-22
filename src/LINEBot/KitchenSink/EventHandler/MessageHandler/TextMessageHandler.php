@@ -38,7 +38,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 
-require '/db.php';
+require_once 'db.php';
 
 class TextMessageHandler implements EventHandler
 {
@@ -64,7 +64,12 @@ class TextMessageHandler implements EventHandler
         $this->logger = $logger;
         $this->req = $req;
         $this->textMessage = $textMessage;
-        getDB();
+        $username = "vkgzqfdpxjrtyk";
+        $dbname = "df1bflok3bn0uc";
+        $host = "ec2-23-23-247-222.compute-1.amazonaws.com";
+        $password = "3e01352f79ef19c119e12b1bfd0c1d00db49543762bbefb7ef0dd5e08521013c";
+        $connection = "host=".$host." dbname=".$dbname." user=".$username." password=".$password;
+        $this->dbconn = pg_connect($connection);
     }
 
     public function handle()
@@ -205,6 +210,7 @@ class TextMessageHandler implements EventHandler
                     // break;
             }
         }
+        pg_close($this->dbconn);
     }
 
     /**
